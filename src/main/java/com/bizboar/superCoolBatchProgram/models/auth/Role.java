@@ -1,6 +1,7 @@
 package com.bizboar.superCoolBatchProgram.models.auth;
 
-import jakarta.persistence.*;
+
+import javax.persistence.*;
 
 @Entity
 public class Role {

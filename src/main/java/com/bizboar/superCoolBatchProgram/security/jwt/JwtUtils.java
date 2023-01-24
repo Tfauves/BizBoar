@@ -1,4 +1,4 @@
-package com.bizboar.superCoolBatchProgram.security;
+package com.bizboar.superCoolBatchProgram.security.jwt;
 
 import com.bizboar.superCoolBatchProgram.security.services.UserDetailsImpl;
 import io.jsonwebtoken.*;
@@ -16,37 +16,35 @@ public class JwtUtils {
     @Value("${superCoolBatchProgram.app.jwtSecret}")
     private String jwtSecret;
 
-    public boolean validateJwtToken(String authToken) {
+    public Boolean validateJwtToken(String authToken) {
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
             return true;
         } catch (SignatureException e) {
             logger.error("Invalid JWT Signature: {}", e.getMessage());
         } catch (MalformedJwtException e) {
-            logger.error("Invalid JWT Token: {}", e.getMessage());
+            logger.error("Invalid JWT token: {}", e.getMessage());;
         } catch (ExpiredJwtException e) {
-            logger.error("Expired JWT Token: {}", e.getMessage());
+            logger.error("JWT expired: {}", e.getMessage());
         } catch (UnsupportedJwtException e) {
-            logger.error("JWT is unsupported: {}", e.getMessage());
+            logger.error(" JWT unsupported: {}", e.getMessage());
         } catch (IllegalArgumentException e) {
-            logger.error("JWT Claims String is empty: {}", e.getMessage());
+            logger.error("JWT claims string is empty: {}", e.getMessage());
         }
-
         return false;
     }
 
     public String generateJwtToken(Authentication authentication) {
         UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
 
-        return Jwts.builder()
-                .setSubject(userPrincipal.getUsername())
+        return Jwts.builder().setSubject(userPrincipal.getUsername())
                 .setIssuedAt(new Date())
-//                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }
 
-    public String getUserNameFromJwtToken(String token) {
+    public String getUsernameFromJwtToken(String token) {
+
         return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
     }
 }
