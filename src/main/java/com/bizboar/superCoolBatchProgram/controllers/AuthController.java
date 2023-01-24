@@ -9,7 +9,7 @@ import com.bizboar.superCoolBatchProgram.payload.response.JwtResponse;
 import com.bizboar.superCoolBatchProgram.payload.response.MessageResponse;
 import com.bizboar.superCoolBatchProgram.repositories.RoleRepository;
 import com.bizboar.superCoolBatchProgram.repositories.UserRepository;
-import com.bizboar.superCoolBatchProgram.security.JwtUtils;
+import com.bizboar.superCoolBatchProgram.security.jwt.JwtUtils;
 import com.bizboar.superCoolBatchProgram.security.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -83,7 +83,7 @@ public class AuthController {
         } else {
             strRoles.forEach(role -> {
                 switch (role) {
-                    case "admin":
+                    case "rockers":
                         Role adminRole = roleRepository.findByName(ERole.ROLE_ROCKERS).orElseThrow(()-> new RuntimeException(("error")));
                         roles.add(adminRole);
                         break;

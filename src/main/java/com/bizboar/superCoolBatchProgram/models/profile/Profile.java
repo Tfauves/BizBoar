@@ -2,7 +2,9 @@ package com.bizboar.superCoolBatchProgram.models.profile;
 
 import com.bizboar.superCoolBatchProgram.models.auth.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+
+
+import javax.persistence.*;
 
 @Entity
 public class Profile {
