@@ -8,6 +8,11 @@ public class BankLoanDataProcessor implements ItemProcessor<BankLoanData, BankLo
 
     @Override
     public BankLoanData process(BankLoanData bankLoanData) throws Exception {
-        return bankLoanData;
+        if (bankLoanData.getBank_state().equals("RI")) {
+            return bankLoanData;
+        } else {
+            return null;
+        }
+
     }
 }
